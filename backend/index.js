@@ -60,6 +60,21 @@ app.post("/writeNumber", async (req, res) => {
   }
 });
 
+// ✅ GET-запит для отримання структури з таблиці
+app.get("/", async (req, res) => {
+  try {
+    const response = await fetch(GAS_URL);
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    console.error("❌ ПОМИЛКА GET /:", err.message);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+
+
+
 // ✅ Запуск сервера
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
