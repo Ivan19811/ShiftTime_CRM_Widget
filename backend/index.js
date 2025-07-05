@@ -61,13 +61,23 @@ app.post("/writeNumber", async (req, res) => {
 });
 
 // ✅ GET-запит для отримання структури з таблиці
-app.get("/", async (req, res) => {
+// ✅ GET-запит для отримання даних з GAS
+app.get("/data", async (req, res) => {
   try {
     const response = await fetch(GAS_URL);
-    const data = await response.json();
-    res.json(data);
+    const text = await response.text(); // спочатку як текст
+    console.log("📦 Відповідь від GAS (/data):", text);
+
+    try {
+      const json = JSON.parse(text); // пробуємо розпарсити
+      res.json(json);
+    } catch (parseError) {
+      console.error("❌ JSON parse error (/data):", parseError.message);
+      res.status(500).json({ success: false, error: "Invalid JSON from GAS" });
+    }
+
   } catch (err) {
-    console.error("❌ ПОМИЛКА GET /:", err.message);
+    console.error("❌ ПОМИЛКА GET /data:", err.message);
     res.status(500).json({ success: false, error: err.message });
   }
 });
