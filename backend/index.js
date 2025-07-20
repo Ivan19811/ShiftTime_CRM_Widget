@@ -83,7 +83,7 @@ app.get("/data", async (req, res) => {
 });
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
+/*
 // ✅ Обробка GET-запиту на /last-id — отримати останній ID з таблиці
 app.get("/last-id", async (req, res) => {
   try {
@@ -106,11 +106,11 @@ app.get("/last-id", async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
-
+*/
 
 //************************************************************************************** */
 // ✅ Отримання прайсу товарів для категорій (проксі для category.js)
-/*app.get("/getPrice", async (req, res) => {
+app.get("/getPrice", async (req, res) => {
   try {
     const response = await fetch(GAS_URL);
     const text = await response.text();
@@ -128,7 +128,7 @@ app.get("/last-id", async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 });
-*/
+
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ✅ Запуск сервера
 const PORT = process.env.PORT || 3000;
