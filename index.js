@@ -108,8 +108,26 @@ app.get("/last-id", async (req, res) => {
 });
 
 
+//************************************************************************************** */
+// ✅ Отримання прайсу товарів для категорій (проксі для category.js)
+app.get("/getPrice", async (req, res) => {
+  try {
+    const response = await fetch(GAS_URL);
+    const text = await response.text();
 
+    try {
+      const data = JSON.parse(text);
+      res.json(data);
+    } catch (parseError) {
+      console.error("❌ JSON parse error (/getPrice):", parseError.message);
+      res.status(500).json({ success: false, error: "Невірний JSON у відповіді від GAS" });
+    }
 
+  } catch (err) {
+    console.error("❌ ПОМИЛКА GET /getPrice:", err.message);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
 
 //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 // ✅ Запуск сервера
